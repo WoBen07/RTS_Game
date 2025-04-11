@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://b7adjesxnlvp6"]
+
+[ext_resource type="Script" path="res://scripts/units/tank.gd" id="1_b76c6"]
+[ext_resource type="Shader" path="res://shaders/tank.gdshader" id="2_vnikw"]
+[ext_resource type="Texture2D" uid="uid://cdxi7q48xss0a" path="res://assets/sprites/Tank_RTS.png" id="2_xdo23"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gmkl3"]
+shader = ExtResource("2_vnikw")
+shader_parameter/show_outline = false
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/number_of_images = Vector2(1, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w05bh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_xdo23")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b6jdm"]
+radius = 23.7697
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xgpb8"]
+radius = 28.0713
+
+[node name="Tank" type="CharacterBody2D"]
+script = ExtResource("1_b76c6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_gmkl3")
+sprite_frames = SubResource("SpriteFrames_w05bh")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(-9, 1)
+shape = SubResource("CircleShape2D_b6jdm")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Selection" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Selection"]
+position = Vector2(-3, 0)
+shape = SubResource("CircleShape2D_xgpb8")
